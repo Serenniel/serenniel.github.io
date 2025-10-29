@@ -45,9 +45,10 @@ body {
     /* FIX: Corrected typo (was 10mplate-rows) */
     width: 100vw; 
     
-    /* UPDATED: Height is now flexible to fill remaining space */
-    flex-grow: 1; /* Fills the space left by the logo */
-    min-height: 0; /* Crucial for flex-grow in a vh container */
+    /* UPDATED: Explicitly set height to fill remaining space */
+    /* 100dvh (total) - 20dvh (logo) = 80dvh */
+    height: 80vh; /* Fallback */
+    height: 80dvh; 
 
     /* DEFAULT (Mobile Portrait): 
       1 column, 4 rows.
@@ -129,7 +130,11 @@ body {
         */
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: 1fr; /* Override the 4-row default */
-        /* flex-grow: 1 and min-height: 0 are inherited, which is correct */
+        
+        /* UPDATED: Explicitly set height */
+        /* 100dvh (total) - 15dvh (logo) = 85dvh */
+        height: 85vh; /* Fallback */
+        height: 85dvh;
     }
     
     /* Change borders from horizontal to vertical */
@@ -185,8 +190,7 @@ body {
         grid-template-columns: repeat(2, 1fr); /* 2 columns */
         grid-template-rows: repeat(2, 1fr); /* 2 rows */
         
-        /* Reset mobile flex properties */
-        flex-grow: 0;
+        /* Reset mobile height */
         height: 100vh; /* Fill the whole screen again */
     }
     
