@@ -37,19 +37,7 @@ body {
 /* --- Main Container --- */
 .container {
     display: grid;
-    width: 100vw; /* 100% of viewport width */
-    
-    /* UPDATED: Height is now flexible to fill remaining space */
-    flex-grow: 1; /* Fills the space left by the logo */
-    min-height: 0; /* Crucial for flex-grow in a vh container */
-
-    /* DEFAULT (Mobile Portrait): 
-      1 column, 4 rows.
-      Each row will be 1fr (fraction) of the remaining height, 
-      resulting in 4 rows of 25% height each.
-    */
-    grid-template-columns: 1fr; 
-    grid-template-rows: repeat(4, 1fr); 
+    width: 10mplate-rows: repeat(4, 1fr); 
 }
 
 /* --- Social Link Styling (the <a> tag) --- */
