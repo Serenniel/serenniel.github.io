@@ -1,0 +1,213 @@
+/* --- Basic Reset & Body Styling --- */
+* {
+    /* Ensures padding and border are included in the element's total width and height */
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* Set height using vh as a fallback and dvh for modern browsers */
+    height: 100vh; /* Fallback for older browsers */
+    height: 100dvh; /* Dynamic viewport height handles mobile UI */
+    font-family: sans-serif;
+    background-color: #111; /* Fallback background */
+    color: white;
+    /* Removed overflow: hidden; to allow scrolling if content overflows */
+}
+
+/* UPDATED: Body is now a flex container for mobile */
+body {
+    display: flex;
+    flex-direction: column;
+    /* Ensure body doesn't shrink below its content */
+    min-height: 100vh; /* Fallback */
+    min-height: 100dvh;
+}
+
+/* --- NEW: Site Logo Styling (Mobile-First) --- */
+.site-logo {
+    display: block;
+    width: auto; /* Let height control the aspect ratio */
+    max-width: 70%; /* Don't let it get too wide */
+    height: 20vh; /* Fallback */
+    height: 20dvh; /* 20% of dynamic viewport height */
+    max-height: 120px; /* A sensible max height */
+    object-fit: contain;
+    margin: 1rem auto 0.5rem; /* Center it, add some margin */
+    flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+/* --- Main Container --- */
+.container {
+    display: grid;
+    /* FIX: Corrected typo (was 10mplate-rows) */
+    width: 100vw; 
+    
+    /* UPDATED: Explicitly set height to fill remaining space */
+    /* 100dvh (total) - 20dvh (logo) = 80dvh */
+    height: 80vh; /* Fallback */
+    height: 80dvh; 
+
+    /* DEFAULT (Mobile Portrait): 
+      1 column, 4 rows.
+    */
+    grid-template-columns: 1fr; 
+    grid-template-rows: repeat(4, 1fr); 
+}
+
+/* --- Social Link Styling (the <a> tag) --- */
+.social-link {
+    display: flex; /* Use flexbox to easily center the image */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* This contains the image during the zoom effect */
+    text-decoration: none;
+    
+    /* Adds a subtle line between items on mobile */
+    border-bottom: 1px solid #333;
+}
+
+/* Remove border from the last item */
+.social-link:last-child {
+    border-bottom: none;
+}
+
+/* --- Background Color Rules --- */
+.social-link.twitch  { background-color: #9146ff; }
+.social-link.youtube { background-color: #ff0000; }
+.social-link.discord { background-color: #5865f2; }
+.social-link.x       { background-color: #000000; } /* Black */
+
+
+/* --- Logo Image Styling (the <img> tag) --- */
+.social-link img {
+    /* Image fills its container */
+    width: 100%;
+    height: 100%;
+    
+    /* Ensures the logo scales proportionally without stretching or cropping.
+      'contain' fits the entire image within the box.
+    */
+    object-fit: contain; 
+    
+    /* Default state: 50% opacity */
+    opacity: 0.5;
+    
+    /* Smooth transition for hover effects */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- Hover Effects --- */
+.social-link:hover img {
+    /* Hover state: 100% opacity */
+    opacity: 1;
+    
+    /* Hover state: Slight zoom in */
+    transform: scale(1.1);
+}
+
+
+/* --- RESPONSIVENESS --- 
+*/
+
+/* MEDIUM: Mobile Landscape 
+  (Targets landscape orientation, but not wide enough to be a desktop)
+*/
+@media (orientation: landscape) and (max-width: 768px) {
+    .site-logo {
+        height: 15vh; /* Fallback */
+        height: 15dvh; /* A bit shorter in landscape */
+        max-height: 100px;
+        margin: 0.5rem auto; /* Less margin */
+    }
+    
+    .container {
+        /* 4 columns, 1 row.
+          Each column will be 1fr (fraction) of the 100vw width,
+          resulting in 4 columns of 25% width each.
+        */
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr; /* Override the 4-row default */
+        
+        /* UPDATED: Explicitly set height */
+        /* 100dvh (total) - 15dvh (logo) = 85dvh */
+        height: 85vh; /* Fallback */
+        height: 85dvh;
+    }
+    
+    /* Change borders from horizontal to vertical */
+    .social-link {
+        border-bottom: none;
+        border-right: 1px solid #333;
+    }
+    
+    .social-link:last-child {
+        border-right: none;
+    }
+}
+
+/* LARGE: Desktop / Tablet 
+  (Targets any screen wider than 768px)
+*/
+@media (min-width: 769px) {
+    body {
+        /* Override mobile flex layout */
+        display: block; 
+        position: relative; /* Context for absolute logo */
+        /* Re-apply overflow: hidden for desktop only, where vh is reliable */
+        overflow: hidden; 
+        min-height: auto; /* Reset min-height */
+    }
+    
+    .site-logo {
+        /* --- Desktop Overlay Styles --- */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        
+        /* Sizing */
+        height: auto; /* Unset mobile vh/dvh height */
+        width: 75vw; /* Increased from 25vw */
+        max-width: 900px; /* Increased from 300px */
+        max-height: 900px; /* Increased from 300px */
+        
+        /* Style */
+        /* background: rgba(0, 0, 0, 0.4); */ /* Optional: dark background */
+        /* border-radius: 50%; */ /* Optional: circular frame */
+        /* padding: 1rem; */
+        
+        /* Make logo non-interactive so links below can be clicked */
+        pointer-events: none; 
+        margin: 0; /* Reset mobile margin */
+    }
+
+    .container {
+        /* 2x2 Quadrant Grid */
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-rows: repeat(2, 1fr); /* 2 rows */
+        
+        /* Reset mobile height */
+        height: 100vh; /* Fill the whole screen again */
+    }
+    
+    /* Reset mobile borders */
+    .social-link {
+        border: none;
+    }
+
+    /* Create the 'cross' border for the 4 quadrants */
+    .social-link:nth-child(1),
+    .social-link:nth-child(2) {
+        border-bottom: 1px solid #333;
+    }
+    
+    .social-link:nth-child(1),
+    .social-link:nth-child(3) {
+        border-right: 1px solid #333;
+    }
+}
+

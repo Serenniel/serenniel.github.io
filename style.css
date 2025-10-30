@@ -1,6 +1,5 @@
 /* --- Basic Reset & Body Styling --- */
 * {
-    /* Ensures padding and border are included in the element's total width and height */
     box-sizing: border-box;
 }
 
@@ -8,136 +7,101 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    /* Set height using vh as a fallback and dvh for modern browsers */
-    height: 100vh; /* Fallback for older browsers */
-    height: 100dvh; /* Dynamic viewport height handles mobile UI */
+    height: 100vh; /* Fallback */
+    height: 100dvh;
     font-family: sans-serif;
-    background-color: #111; /* Fallback background */
+    background-color: #111;
     color: white;
-    /* Removed overflow: hidden; to allow scrolling if content overflows */
 }
 
-/* UPDATED: Body is now a flex container for mobile */
+/* --- MOBILE-FIRST LAYOUT --- */
+
+/* Body as flex-column for mobile */
 body {
     display: flex;
     flex-direction: column;
-    /* Ensure body doesn't shrink below its content */
     min-height: 100vh; /* Fallback */
     min-height: 100dvh;
 }
 
-/* --- NEW: Site Logo Styling (Mobile-First) --- */
+/* Site Logo for Mobile */
 .site-logo {
     display: block;
-    width: auto; /* Let height control the aspect ratio */
-    max-width: 70%; /* Don't let it get too wide */
+    width: auto;
+    max-width: 70%;
     height: 20vh; /* Fallback */
-    height: 20dvh; /* 20% of dynamic viewport height */
-    max-height: 120px; /* A sensible max height */
+    height: 20dvh;
+    max-height: 120px;
     object-fit: contain;
-    margin: 1rem auto 0.5rem; /* Center it, add some margin */
-    flex-shrink: 0; /* Prevent logo from shrinking */
+    margin: 1rem auto 0.5rem;
+    flex-shrink: 0;
 }
 
-/* --- Main Container --- */
+/* Mobile Link Container (Stacked List) */
 .container {
     display: grid;
-    /* FIX: Corrected typo (was 10mplate-rows) */
-    width: 100vw; 
-    
-    /* UPDATED: Explicitly set height to fill remaining space */
-    /* 100dvh (total) - 20dvh (logo) = 80dvh */
+    width: 100vw;
     height: 80vh; /* Fallback */
-    height: 80dvh; 
-
-    /* DEFAULT (Mobile Portrait): 
-      1 column, 4 rows.
-    */
-    grid-template-columns: 1fr; 
-    grid-template-rows: repeat(4, 1fr); 
+    height: 80dvh; /* 100dvh - 20dvh (logo) */
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
 }
 
-/* --- Social Link Styling (the <a> tag) --- */
+/* Mobile individual link styles */
 .social-link {
-    display: flex; /* Use flexbox to easily center the image */
+    display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* This contains the image during the zoom effect */
+    overflow: hidden;
     text-decoration: none;
-    
-    /* Adds a subtle line between items on mobile */
     border-bottom: 1px solid #333;
 }
 
-/* Remove border from the last item */
 .social-link:last-child {
     border-bottom: none;
 }
 
-/* --- Background Color Rules --- */
-.social-link.twitch  { background-color: #9146ff; }
-.social-link.youtube { background-color: #ff0000; }
-.social-link.discord { background-color: #5865f2; }
-.social-link.x       { background-color: #000000; } /* Black */
-
-
-/* --- Logo Image Styling (the <img> tag) --- */
+/* Mobile image logo styles */
 .social-link img {
-    /* Image fills its container */
     width: 100%;
     height: 100%;
-    
-    /* Ensures the logo scales proportionally without stretching or cropping.
-      'contain' fits the entire image within the box.
-    */
-    object-fit: contain; 
-    
-    /* Default state: 50% opacity */
+    object-fit: contain;
     opacity: 0.5;
-    
-    /* Smooth transition for hover effects */
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* --- Hover Effects --- */
+/* Mobile hover effects */
 .social-link:hover img {
-    /* Hover state: 100% opacity */
     opacity: 1;
-    
-    /* Hover state: Slight zoom in */
     transform: scale(1.1);
 }
 
+/* Background Color Rules (used by both mobile & desktop) */
+.twitch  { background-color: #9146ff; }
+.youtube { background-color: #ff0000; }
+.discord { background-color: #5865f2; }
+.x       { background-color: #000000; }
+.merch   { background-color: #ffffff; }
 
-/* --- RESPONSIVENESS --- 
-*/
 
-/* MEDIUM: Mobile Landscape 
-  (Targets landscape orientation, but not wide enough to be a desktop)
-*/
+/* --- RESPONSIVENESS --- */
+
+/* MEDIUM: Mobile Landscape */
 @media (orientation: landscape) and (max-width: 768px) {
     .site-logo {
         height: 15vh; /* Fallback */
-        height: 15dvh; /* A bit shorter in landscape */
+        height: 15dvh;
         max-height: 100px;
-        margin: 0.5rem auto; /* Less margin */
+        margin: 0.5rem auto;
     }
     
     .container {
-        /* 4 columns, 1 row.
-          Each column will be 1fr (fraction) of the 100vw width,
-          resulting in 4 columns of 25% width each.
-        */
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 1fr; /* Override the 4-row default */
-        
-        /* UPDATED: Explicitly set height */
-        /* 100dvh (total) - 15dvh (logo) = 85dvh */
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: 1fr; /* Reset portrait rows */
         height: 85vh; /* Fallback */
-        height: 85dvh;
+        height: 85dvh; /* 100dvh - 15dvh (logo) */
     }
     
-    /* Change borders from horizontal to vertical */
     .social-link {
         border-bottom: none;
         border-right: 1px solid #333;
@@ -148,21 +112,19 @@ body {
     }
 }
 
-/* LARGE: Desktop / Tablet 
-  (Targets any screen wider than 768px)
-*/
+/* LARGE: Desktop / Tablet (2-over-3 Layout) */
 @media (min-width: 769px) {
+    
+    /* Revert body to simple block layout */
     body {
-        /* Override mobile flex layout */
-        display: block; 
-        position: relative; /* Context for absolute logo */
-        /* Re-apply overflow: hidden for desktop only, where vh is reliable */
-        overflow: hidden; 
-        min-height: auto; /* Reset min-height */
+        display: block;
+        position: relative; /* Context for logo */
+        overflow: hidden;
+        min-height: auto;
     }
     
+    /* Center overlay logo for Desktop */
     .site-logo {
-        /* --- Desktop Overlay Styles --- */
         position: absolute;
         top: 50%;
         left: 50%;
@@ -170,44 +132,56 @@ body {
         z-index: 10;
         
         /* Sizing */
-        height: auto; /* Unset mobile vh/dvh height */
-        width: 75vw; /* Increased from 25vw */
-        max-width: 900px; /* Increased from 300px */
-        max-height: 900px; /* Increased from 300px */
+        height: auto;
+        width: 75vw;
+        max-width: 900px;
+        max-height: 900px;
         
-        /* Style */
-        /* background: rgba(0, 0, 0, 0.4); */ /* Optional: dark background */
-        /* border-radius: 50%; */ /* Optional: circular frame */
-        /* padding: 1rem; */
-        
-        /* Make logo non-interactive so links below can be clicked */
-        pointer-events: none; 
-        margin: 0; /* Reset mobile margin */
+        pointer-events: none; /* Can't be clicked */
+        margin: 0;
     }
 
+    /* Desktop Container: 6-col grid for easy layout */
     .container {
-        /* 2x2 Quadrant Grid */
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
-        grid-template-rows: repeat(2, 1fr); /* 2 rows */
-        
-        /* Reset mobile height */
-        height: 100vh; /* Fill the whole screen again */
+        display: grid;
+        height: 100vh; /* Fill screen */
+        width: 100vw;
+        /* A 6-column grid makes 2 and 3-column layouts easy */
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(2, 1fr); /* 2 equal rows */
     }
-    
-    /* Reset mobile borders */
+
+    /* Reset mobile link styles and add desktop borders */
     .social-link {
         border: none;
+        border-top: 1px solid #333;
+        border-left: 1px solid #333;
     }
 
-    /* Create the 'cross' border for the 4 quadrants */
-    .social-link:nth-child(1),
-    .social-link:nth-child(2) {
-        border-bottom: 1px solid #333;
+    /* --- Desktop Grid Layout --- */
+
+    /* Top Row */
+    .social-link.twitch {
+        grid-column: 1 / 4; /* Spans 3 columns (1, 2, 3) */
+        grid-row: 1;
     }
-    
-    .social-link:nth-child(1),
-    .social-link:nth-child(3) {
-        border-right: 1px solid #333;
+    .social-link.youtube {
+        grid-column: 4 / 7; /* Spans 3 columns (4, 5, 6) */
+        grid-row: 1;
+    }
+
+    /* Bottom Row */
+    .social-link.discord {
+        grid-column: 1 / 3; /* Spans 2 columns (1, 2) */
+        grid-row: 2;
+    }
+    .social-link.x {
+        grid-column: 3 / 5; /* Spans 2 columns (3, 4) */
+        grid-row: 2;
+    }
+    .social-link.merch {
+        grid-column: 5 / 7; /* Spans 2 columns (5, 6) */
+        grid-row: 2;
     }
 }
 
