@@ -1,0 +1,202 @@
+/* ... Keep your existing BODY, CONTAINER, HEADER, SEARCH styles ... */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+header {
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 20px;
+}
+
+/* Search & List Styles */
+.search-section { margin-bottom: 20px; }
+
+#raceSearchInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+#raceSearchInput:focus { border-color: #007bff; outline: none; }
+
+.race-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    display: none;
+}
+
+.race-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: monospace;
+    font-size: 0.95rem;
+}
+.race-item:hover { background-color: #f0f8ff; color: #007bff; }
+
+/* Detail View Styles */
+#backButton {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding: 0;
+    text-decoration: underline;
+}
+
+/* Metadata List Format */
+#metadataPanel {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.meta-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.meta-row:last-child { border-bottom: none; }
+
+.meta-label {
+    width: 140px;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #666;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.meta-value { font-size: 1.1rem; font-weight: 500; color: #222; }
+
+.table-controls { margin-bottom: 10px; text-align: right; }
+#driverSearchInput { padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+
+/* --- NEW: Links Panel Styles --- */
+#linksPanel {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.race-link-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #007bff; /* Blue */
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.race-link-btn:hover {
+    background-color: #0056b3; /* Darker Blue */
+    transform: translateY(-1px);
+}
+
+.race-link-btn:active {
+    transform: translateY(0);
+}
+
+/* Optional icon for the link button */
+.race-link-btn::before {
+    content: "🔗";
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Table Styling */
+.table-container { overflow-x: auto; border: 1px solid #eee; border-radius: 6px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+
+th, td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #343a40;
+    color: white;
+    font-weight: 500;
+    position: sticky; top: 0;
+    z-index: 10; /* Ensures header stays on top */
+}
+
+/* Zebra Striping */
+tbody tr:nth-child(even) {
+    background-color: #f9f9fa;
+}
+
+/* Podium Highlights */
+.podium-1 { background-color: rgba(255, 215, 0, 0.15) !important; }
+.podium-2 { background-color: rgba(192, 192, 192, 0.15) !important; }
+.podium-3 { background-color: rgba(205, 127, 50, 0.15) !important; }
+
+/* --- NEW: Red DNF Styling --- */
+.dnf-row {
+    background-color: #ffe5e5 !important;
+    color: #cc0000 !important;
+}
+
+/* --- NEW: Universal Hover Effect (Preserves Color) --- */
+/* Instead of setting a solid background color on the row (TR),
+   we apply a transparent dark tint to the cells (TD).
+   This layers on top of Gold/Red/Silver without replacing them.
+*/
+tbody tr:hover {
+    /* Reset any standard row hover color so we don't clash */
+    background-color: inherit; 
+    transition: none; /* Instant feedback is usually snappier for tables */
+}
+
+tbody tr:hover td {
+    /* This adds a 7% black tint on top of the existing color.
+       - White rows become light grey.
+       - Gold rows become darker Gold.
+       - Red rows become darker Red.
+    */
+    background-color: rgba(0, 0, 0, 0.07);
+    
+    /* Optional: If you truly want it "Lighter" instead of "Darker/Highlighted",
+       change the line above to: 
+       background-color: rgba(255, 255, 255, 0.4); 
+       (Note: This will make white rows invisible on hover, so the Dark tint is usually better UX)
+    */
+}}
