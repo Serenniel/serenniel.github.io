@@ -1,0 +1,20 @@
+[
+  {
+    "filename": "02-13-2025-digicup-001.csv",
+    "date": "02/13/2025",
+    "series": "The Digital Cup",
+    "race_num": "1",
+    "map": "Vinewood Peak",
+    "car": "Banshee GTS",
+    "division": "1"
+  },
+  {
+  "filename": "02-13-2025-digicup-002.csv",
+    "date": "02/13/2025",
+    "series": "The Digital Cup",
+    "race_num": "1",
+    "map": "Vinewood Peak",
+    "car": "Banshee GTS",
+    "division": "2"
+  }
+]

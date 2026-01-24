@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Results Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🏎️ Race Results Hub</h1>
+        </header>
+
+        <div class="search-section">
+            <input type="text" id="raceSearchInput" placeholder="🔍 Search by Series, Date, Map, or Car...">
+            <div id="raceList" class="race-list"></div>
+        </div>
+
+        <div id="raceDetailView" style="display: none;">
+            <button id="backButton">← Back to Search</button>
+            
+            <div id="metadataPanel"></div>
+
+            <div id="linksPanel"></div>
+
+            <div class="table-container">
+                <div class="table-controls">
+                    <input type="text" id="driverSearchInput" placeholder="Filter drivers in this race...">
+                </div>
+                <table id="resultsTable">
+                    <thead>
+                        <tr id="tableHead"></tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
